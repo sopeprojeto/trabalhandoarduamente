@@ -26,11 +26,11 @@ FILE *newfile;
   exit(1);}
 
   if ((d=opendir(argv[1]))==NULL){
-   fprintf(stderr,"Erros: Directory %s not found\n", argv[1]);
+   fprintf(stderr,"Error: Directory %s not found\n", argv[1]);
    exit(1);}
-  //Creation of the file if it doesnt exist
+  //Criar ficheito txt se nao existir "a"
 
-   newfile = fopen("info.txt", "a"); 
+   newfile = fopen("files.txt", "a"); 
 
   //Ciclo para leitura do directorio
 
@@ -40,7 +40,7 @@ FILE *newfile;
           if (lstat(name, &buf) == -1) {
           perror("lstat error");
           int erro=errno;
-          if (erro==EACCES) //if one of the directories composing the path is not readable
+          if (erro==EACCES) //Se um dos diretorios da path nao consegue ser lido
               fprintf(stderr, "in %s\n\n", name);
       }
     if (S_ISREG(buf.st_mode)){ 
@@ -66,7 +66,7 @@ FILE *newfile;
         fprintf(newfile, " %s/%s %s\n", curdir, argv[1], dir->d_name);
     }
   }  
-      //New lsdir if a directory is found
+      //Chamada de outro lsdir se for encontrado um directorio
   else if (S_ISDIR(buf.st_mode)){
     if ((pid=fork())==-1){
       perror("Lsdir fork error \n");
